@@ -40,17 +40,16 @@ def stream_video(drone):
     while True:
         frame = drone.get_frame_read().frame
         # Check if frame reading was successful
-        if frame is not None:
-            cv2.imshow('tello stream', frame)
+        cv2.imshow('tello stream', frame)
 
-            #######################  NEW - 3 ############################
-            # Check if streaming readiness hasn't been signaled yet
-            if not stream_ready.is_set():
+        #######################  NEW - 3 ############################
+        # Check if streaming readiness hasn't been signaled yet
+        if not stream_ready.is_set():
 
-                # Signal that video streaming is ready
-                stream_ready.set()
-                print("Event Signal Set: Stream is live.")
-            ##########################################################
+            # Signal that video streaming is ready
+            stream_ready.set()
+            print("Event Signal Set: Stream is live.")
+        ##########################################################
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -75,8 +74,6 @@ def main():
     # Start the thread
     stream_thread.start()
     ##########################################################
-
-    print("Executing flight routine\n")
 
     # Execute the flight routine
     flight_routine(drone)
